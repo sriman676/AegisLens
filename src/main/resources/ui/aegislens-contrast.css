@@ -1,0 +1,46 @@
+/* AegisLens high-contrast design (G11): the dark design with pure black panels, white text, thick yellow focus
+   rings and no glow. Every style class therefore exists here too (imported from the dark stylesheet). */
+@import "aegislens-dark.css";
+
+.root {
+    -al-bg: #000000;
+    -al-sidebar: #000000;
+    -al-panel: #000000;
+    -al-panel-2: #0A0A0A;
+    -al-border: #FFFFFF;
+    -al-text: #FFFFFF;
+    -al-muted: #FFFFFF;
+    -al-accent: #FFFF00;
+    -al-violet: #FFFF00;
+    -al-low: #00FFFF;
+    -al-medium: #FFFF00;
+    -al-high: #FFA500;
+    -al-critical: #FF4D4D;
+    -fx-base: #000000;
+    -fx-background: #000000;
+    -fx-control-inner-background: #000000;
+    -fx-control-inner-background-alt: #111111;
+    -fx-accent: #FFFF00;
+    -fx-focus-color: #FFFF00;
+    -fx-faint-focus-color: #FFFF0066;
+    -fx-text-base-color: #FFFFFF;
+    -fx-font-size: 14px;
+}
+
+.panel, .card { -fx-background-color: #000000; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-effect: null; }
+.card.sev-low, .card.sev-medium, .card.sev-high, .card.sev-critical { -fx-effect: null; }
+.nav-section, .nav-button, .nav-button .icon, .section-title, .page-subtitle, .card-sub, .brand-tag { -fx-text-fill: #FFFFFF; -fx-fill: #FFFFFF; }
+.nav-button:selected { -fx-background-color: #FFFF00; -fx-text-fill: #000000; }
+.nav-button:selected .icon { -fx-fill: #000000; }
+.primary-button, .sidebar .action-button { -fx-background-color: #FFFF00; -fx-text-fill: #000000; }
+.secondary-button, .sidebar .ghost-button, .danger-button { -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-text-fill: #FFFFFF; }
+.table-view .column-header .label { -fx-text-fill: #FFFFFF; }
+.axis { -fx-tick-label-fill: #FFFFFF; }
+.chart-legend-item { -fx-text-fill: #FFFFFF; }
+*:focused { -fx-border-color: #FFFF00; -fx-border-width: 3; }
+.text-field, .text-area { -fx-background-color: #000000; -fx-border-color: #FFFFFF; -fx-border-width: 2; -fx-prompt-text-fill: #D0D0D0; }
+
+/* CriticalToast: notice for a new CRITICAL finding */
+.toast { -fx-background-color: #000000; -fx-border-color: -al-critical; -fx-border-width: 3; -fx-padding: 12 16; -fx-cursor: hand; }
+.toast-title { -fx-text-fill: -al-critical; -fx-font-weight: bold; -fx-font-size: 0.85em; }
+.toast-text { -fx-text-fill: -al-text; }

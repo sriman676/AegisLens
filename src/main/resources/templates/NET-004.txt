@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, source {target}).
+Why it matters: A sudden spike far above the normal request rate can be a scan, a flood, or a misbehaving client.
+How to fix it: Identify the busy address, apply rate limiting, and check whether the traffic is legitimate. Evidence: {evidence}.

@@ -1,0 +1,3 @@
+What happened: A program was started from a user folder such as Downloads or Temp. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Installers often run from there, but so does malware that a user opened from an e-mail or a download; programs that stay installed normally live in Program Files.
+How to fix it: Check where the file came from and scan it in the Malware screen; if nobody expected it, quarantine it.

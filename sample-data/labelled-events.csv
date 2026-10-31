@@ -1,0 +1,153 @@
+source,line,label,expected_rule
+ssh,Oct 30 14:00:00 srv sshd[221]: Failed password for root from 203.0.113.10 port 50000 ssh2,attack,NET-001
+ssh,Oct 30 14:00:01 srv sshd[427]: Failed password for root from 203.0.113.10 port 50001 ssh2,attack,NET-001
+ssh,Oct 30 14:00:02 srv sshd[614]: Failed password for root from 203.0.113.10 port 50002 ssh2,attack,NET-001
+ssh,Oct 30 14:00:03 srv sshd[624]: Failed password for root from 203.0.113.10 port 50003 ssh2,attack,NET-001
+ssh,Oct 30 14:00:04 srv sshd[762]: Failed password for root from 203.0.113.10 port 50004 ssh2,attack,NET-001
+ssh,Oct 30 14:00:05 srv sshd[980]: Failed password for root from 203.0.113.10 port 50005 ssh2,attack,NET-001
+ssh,Oct 30 14:05:10 srv sshd[205]: Failed password for admin from 203.0.113.11 port 51000 ssh2,attack,NET-001
+ssh,Oct 30 14:05:11 srv sshd[328]: Failed password for admin from 203.0.113.11 port 51001 ssh2,attack,NET-001
+ssh,Oct 30 14:05:12 srv sshd[715]: Failed password for admin from 203.0.113.11 port 51002 ssh2,attack,NET-001
+ssh,Oct 30 14:05:13 srv sshd[736]: Failed password for admin from 203.0.113.11 port 51003 ssh2,attack,NET-001
+ssh,Oct 30 14:05:14 srv sshd[669]: Failed password for admin from 203.0.113.11 port 51004 ssh2,attack,NET-001
+ssh,Oct 30 14:05:15 srv sshd[530]: Failed password for admin from 203.0.113.11 port 51005 ssh2,attack,NET-001
+ssh,Oct 30 14:05:20 srv sshd[902]: Accepted password for admin from 203.0.113.11 port 51010 ssh2,attack,NET-001
+ssh,Oct 30 14:10:10 srv sshd[686]: Failed password for invalid user alice from 203.0.113.12 port 52000 ssh2,attack,NET-007
+ssh,Oct 30 14:10:11 srv sshd[660]: Failed password for invalid user bob from 203.0.113.12 port 52001 ssh2,attack,NET-007
+ssh,Oct 30 14:10:12 srv sshd[962]: Failed password for invalid user carol from 203.0.113.12 port 52002 ssh2,attack,NET-007
+ssh,Oct 30 14:10:13 srv sshd[848]: Failed password for invalid user dave from 203.0.113.12 port 52003 ssh2,attack,NET-007
+ssh,Oct 30 14:10:14 srv sshd[895]: Failed password for invalid user erin from 203.0.113.12 port 52004 ssh2,attack,NET-007
+ssh,Oct 30 14:10:15 srv sshd[886]: Failed password for invalid user frank from 203.0.113.12 port 52005 ssh2,attack,NET-007
+ssh,Oct 30 14:10:16 srv sshd[602]: Failed password for invalid user grace from 203.0.113.12 port 52006 ssh2,attack,NET-007
+ssh,Oct 30 03:12:44 srv sshd[869]: Accepted password for carol from 192.0.2.30 port 53001 ssh2,attack,NET-003
+ssh,Oct 30 16:15:00 srv sshd[182]: Accepted publickey for user0 from 198.51.100.40 port 40000 ssh2,benign,
+ssh,Oct 30 10:18:52 srv sshd[560]: Accepted publickey for user1 from 198.51.100.7 port 40001 ssh2,benign,
+ssh,Oct 30 09:52:57 srv sshd[602]: Accepted publickey for user2 from 198.51.100.44 port 40002 ssh2,benign,
+ssh,Oct 30 14:13:25 srv sshd[456]: Accepted publickey for user3 from 198.51.100.17 port 40003 ssh2,benign,
+ssh,Oct 30 14:51:24 srv sshd[625]: Accepted publickey for user4 from 198.51.100.48 port 40004 ssh2,benign,
+ssh,Oct 30 10:46:21 srv sshd[670]: Accepted publickey for user5 from 198.51.100.6 port 40005 ssh2,benign,
+ssh,Oct 30 17:18:18 srv sshd[244]: Accepted publickey for user6 from 198.51.100.30 port 40006 ssh2,benign,
+ssh,Oct 30 13:01:54 srv sshd[477]: Accepted publickey for user7 from 198.51.100.46 port 40007 ssh2,benign,
+ssh,Oct 30 14:29:27 srv sshd[508]: Accepted publickey for user8 from 198.51.100.6 port 40008 ssh2,benign,
+ssh,Oct 30 17:31:55 srv sshd[535]: Accepted publickey for user9 from 198.51.100.8 port 40009 ssh2,benign,
+ssh,Oct 30 17:51:48 srv sshd[714]: Accepted publickey for user10 from 198.51.100.56 port 40010 ssh2,benign,
+ssh,Oct 30 16:25:58 srv sshd[364]: Accepted publickey for user11 from 198.51.100.34 port 40011 ssh2,benign,
+ssh,Oct 30 15:36:59 srv sshd[625]: Accepted publickey for user0 from 198.51.100.31 port 40012 ssh2,benign,
+ssh,Oct 30 17:51:01 srv sshd[329]: Accepted publickey for user1 from 198.51.100.37 port 40013 ssh2,benign,
+ssh,Oct 30 11:52:03 srv sshd[635]: Accepted publickey for user2 from 198.51.100.46 port 40014 ssh2,benign,
+ssh,Oct 30 10:45:39 srv sshd[581]: Accepted publickey for user3 from 198.51.100.28 port 40015 ssh2,benign,
+ssh,Oct 30 11:30:56 srv sshd[970]: Accepted publickey for user4 from 198.51.100.15 port 40016 ssh2,benign,
+ssh,Oct 30 10:40:44 srv sshd[790]: Accepted publickey for user5 from 198.51.100.30 port 40017 ssh2,benign,
+ssh,Oct 30 16:45:59 srv sshd[357]: Accepted publickey for user6 from 198.51.100.35 port 40018 ssh2,benign,
+ssh,Oct 30 17:25:42 srv sshd[661]: Accepted publickey for user7 from 198.51.100.20 port 40019 ssh2,benign,
+ssh,Oct 30 17:44:30 srv sshd[511]: Accepted publickey for user8 from 198.51.100.52 port 40020 ssh2,benign,
+ssh,Oct 30 15:12:18 srv sshd[375]: Accepted publickey for user9 from 198.51.100.54 port 40021 ssh2,benign,
+ssh,Oct 30 09:02:09 srv sshd[711]: Accepted publickey for user10 from 198.51.100.42 port 40022 ssh2,benign,
+ssh,Oct 30 16:51:33 srv sshd[601]: Accepted publickey for user11 from 198.51.100.60 port 40023 ssh2,benign,
+ssh,Oct 30 14:58:12 srv sshd[809]: Accepted publickey for user0 from 198.51.100.17 port 40024 ssh2,benign,
+ssh,Oct 30 16:29:32 srv sshd[946]: Accepted publickey for user1 from 198.51.100.50 port 40025 ssh2,benign,
+ssh,Oct 30 16:51:27 srv sshd[779]: Accepted publickey for user2 from 198.51.100.36 port 40026 ssh2,benign,
+ssh,Oct 30 09:53:18 srv sshd[568]: Accepted publickey for user3 from 198.51.100.21 port 40027 ssh2,benign,
+ssh,Oct 30 10:28:44 srv sshd[903]: Accepted publickey for user4 from 198.51.100.46 port 40028 ssh2,benign,
+ssh,Oct 30 17:16:28 srv sshd[287]: Accepted publickey for user5 from 198.51.100.60 port 40029 ssh2,benign,
+ssh,Oct 30 15:53:46 srv sshd[165]: Accepted publickey for user6 from 198.51.100.31 port 40030 ssh2,benign,
+ssh,Oct 30 13:57:31 srv sshd[198]: Accepted publickey for user7 from 198.51.100.24 port 40031 ssh2,benign,
+ssh,Oct 30 12:47:54 srv sshd[249]: Accepted publickey for user8 from 198.51.100.27 port 40032 ssh2,benign,
+ssh,Oct 30 16:58:00 srv sshd[100]: Accepted publickey for user9 from 198.51.100.6 port 40033 ssh2,benign,
+ssh,Oct 30 16:37:34 srv sshd[956]: Accepted publickey for user10 from 198.51.100.60 port 40034 ssh2,benign,
+ssh,Oct 30 10:39:50 srv sshd[353]: Accepted publickey for user11 from 198.51.100.13 port 40035 ssh2,benign,
+ssh,Oct 30 10:39:02 srv sshd[659]: Accepted publickey for user0 from 198.51.100.49 port 40036 ssh2,benign,
+ssh,Oct 30 13:42:48 srv sshd[465]: Accepted publickey for user1 from 198.51.100.41 port 40037 ssh2,benign,
+ssh,Oct 30 11:00:20 srv sshd[697]: Accepted publickey for user2 from 198.51.100.43 port 40038 ssh2,benign,
+ssh,Oct 30 16:44:46 srv sshd[658]: Accepted publickey for user3 from 198.51.100.9 port 40039 ssh2,benign,
+ssh,Oct 30 11:00:01 srv sshd[328]: Failed password for priya from 198.51.100.77 port 41001 ssh2,benign,
+ssh,Oct 30 11:00:09 srv sshd[584]: Failed password for priya from 198.51.100.77 port 41002 ssh2,benign,
+ssh,Oct 30 11:00:15 srv sshd[702]: Accepted password for priya from 198.51.100.77 port 41003 ssh2,benign,
+ssh,Oct 30 12:30:00 srv sshd[234]: Connection closed by 198.51.100.5 port 41100 [preauth],benign,
+web,"203.0.113.20 - - [30/Oct/2026:14:20:00 +0000] ""GET /admin HTTP/1.1"" 404 8469 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:01 +0000] ""GET /wp-login.php HTTP/1.1"" 404 4962 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:02 +0000] ""GET /.env HTTP/1.1"" 404 1583 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:03 +0000] ""GET /backup.zip HTTP/1.1"" 404 7044 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:04 +0000] ""GET /phpmyadmin HTTP/1.1"" 404 2823 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:05 +0000] ""GET /config.php HTTP/1.1"" 404 2417 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:06 +0000] ""GET /.git/config HTTP/1.1"" 404 5213 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:07 +0000] ""GET /server-status HTTP/1.1"" 404 8518 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:08 +0000] ""GET /old/ HTTP/1.1"" 404 6950 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:09 +0000] ""GET /test.php HTTP/1.1"" 404 6596 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:10 +0000] ""GET /db.sql HTTP/1.1"" 404 2633 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:11 +0000] ""GET /api/v1/debug HTTP/1.1"" 404 8720 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:12 +0000] ""GET /console HTTP/1.1"" 404 3422 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:13 +0000] ""GET /shell.php HTTP/1.1"" 404 6360 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:14 +0000] ""GET /xmlrpc.php HTTP/1.1"" 404 431 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.20 - - [30/Oct/2026:14:20:15 +0000] ""GET /cgi-bin/test.cgi HTTP/1.1"" 404 1938 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,NET-002
+web,"203.0.113.21 - - [30/Oct/2026:14:30:01 +0000] ""GET /item?id=1%20UNION%20SELECT%20password%20FROM%20users HTTP/1.1"" 200 6579 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,WEB-002
+web,"203.0.113.22 - - [30/Oct/2026:14:31:01 +0000] ""GET /search?q=%3Cscript%3Ealert(1)%3C/script%3E HTTP/1.1"" 200 1403 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,WEB-002
+web,"203.0.113.24 - - [30/Oct/2026:14:32:01 +0000] ""GET /download?file=../../etc/passwd HTTP/1.1"" 400 1041 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",attack,WEB-002
+web,"203.0.113.23 - - [30/Oct/2026:14:33:01 +0000] ""GET /index.html HTTP/1.1"" 200 5885 ""-"" ""sqlmap/1.7.2#stable (https://sqlmap.org)""",attack,NET-006
+web,"203.0.113.25 - - [30/Oct/2026:14:34:01 +0000] ""GET /index.html HTTP/1.1"" 200 5990 ""-"" ""Nikto/2.5.0""",attack,NET-006
+web,"198.51.100.60 - - [30/Oct/2026:09:01:32 +0000] ""GET /static/logo.png HTTP/1.1"" 200 5570 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.44 - - [30/Oct/2026:13:28:20 +0000] ""GET /index.html HTTP/1.1"" 200 8352 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.30 - - [30/Oct/2026:11:09:37 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 3591 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.28 - - [30/Oct/2026:14:29:38 +0000] ""GET /products?id=7 HTTP/1.1"" 200 1338 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.36 - - [30/Oct/2026:15:02:12 +0000] ""GET /checkout HTTP/1.1"" 200 3040 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.3 - - [30/Oct/2026:17:59:53 +0000] ""GET / HTTP/1.1"" 200 7602 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.56 - - [30/Oct/2026:12:30:45 +0000] ""GET /checkout HTTP/1.1"" 200 535 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.9 - - [30/Oct/2026:17:13:50 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 2456 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.11 - - [30/Oct/2026:11:24:17 +0000] ""GET /static/app.css HTTP/1.1"" 200 8932 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.27 - - [30/Oct/2026:10:24:19 +0000] ""GET /about.html HTTP/1.1"" 200 5837 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.12 - - [30/Oct/2026:13:29:31 +0000] ""GET /static/app.css HTTP/1.1"" 200 4913 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.30 - - [30/Oct/2026:11:20:33 +0000] ""GET /static/logo.png HTTP/1.1"" 200 7484 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.8 - - [30/Oct/2026:17:50:33 +0000] ""GET /products?id=12 HTTP/1.1"" 200 1749 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.55 - - [30/Oct/2026:12:14:00 +0000] ""GET /index.html HTTP/1.1"" 200 7640 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.42 - - [30/Oct/2026:14:26:34 +0000] ""GET /checkout HTTP/1.1"" 200 3189 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.2 - - [30/Oct/2026:14:54:10 +0000] ""GET /contact HTTP/1.1"" 200 3747 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.8 - - [30/Oct/2026:13:35:48 +0000] ""GET /cart HTTP/1.1"" 200 3713 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.37 - - [30/Oct/2026:13:36:17 +0000] ""GET /checkout HTTP/1.1"" 200 2372 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.7 - - [30/Oct/2026:13:06:27 +0000] ""GET /about.html HTTP/1.1"" 200 1937 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.44 - - [30/Oct/2026:09:48:22 +0000] ""GET /blog/how-to-choose HTTP/1.1"" 200 3239 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.42 - - [30/Oct/2026:10:32:20 +0000] ""GET /products?id=12 HTTP/1.1"" 200 1247 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.19 - - [30/Oct/2026:14:10:16 +0000] ""GET /products?id=12 HTTP/1.1"" 200 1230 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.1 - - [30/Oct/2026:15:55:57 +0000] ""GET /products?id=12 HTTP/1.1"" 200 6991 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.1 - - [30/Oct/2026:09:06:15 +0000] ""GET / HTTP/1.1"" 200 5277 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.8 - - [30/Oct/2026:10:43:35 +0000] ""GET /cart HTTP/1.1"" 200 5939 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.21 - - [30/Oct/2026:16:38:40 +0000] ""GET /checkout HTTP/1.1"" 200 822 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.60 - - [30/Oct/2026:15:20:38 +0000] ""GET /products?id=7 HTTP/1.1"" 200 7780 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.28 - - [30/Oct/2026:10:43:23 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 4321 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.25 - - [30/Oct/2026:13:52:22 +0000] ""GET / HTTP/1.1"" 200 7355 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.57 - - [30/Oct/2026:09:18:44 +0000] ""GET /contact HTTP/1.1"" 200 4944 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.47 - - [30/Oct/2026:10:19:49 +0000] ""GET /static/app.css HTTP/1.1"" 200 5424 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.38 - - [30/Oct/2026:09:34:21 +0000] ""GET /products?id=7 HTTP/1.1"" 200 1119 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.47 - - [30/Oct/2026:10:10:39 +0000] ""GET /index.html HTTP/1.1"" 200 2137 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.3 - - [30/Oct/2026:11:33:22 +0000] ""GET /cart HTTP/1.1"" 200 5151 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.2 - - [30/Oct/2026:15:37:08 +0000] ""GET /contact HTTP/1.1"" 200 7004 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.25 - - [30/Oct/2026:15:15:49 +0000] ""GET /static/app.css HTTP/1.1"" 200 3797 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.50 - - [30/Oct/2026:11:11:34 +0000] ""GET / HTTP/1.1"" 200 6702 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.57 - - [30/Oct/2026:13:50:09 +0000] ""GET /products?id=7 HTTP/1.1"" 200 582 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.2 - - [30/Oct/2026:13:34:30 +0000] ""GET /static/app.css HTTP/1.1"" 200 4522 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.21 - - [30/Oct/2026:11:40:37 +0000] ""GET /index.html HTTP/1.1"" 200 3137 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.36 - - [30/Oct/2026:09:41:55 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 4545 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.22 - - [30/Oct/2026:17:48:47 +0000] ""GET /contact HTTP/1.1"" 200 1121 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.43 - - [30/Oct/2026:09:40:15 +0000] ""GET /static/logo.png HTTP/1.1"" 200 1155 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.15 - - [30/Oct/2026:17:55:09 +0000] ""GET /blog/how-to-choose HTTP/1.1"" 200 6738 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.46 - - [30/Oct/2026:14:50:14 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 4718 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.22 - - [30/Oct/2026:12:23:22 +0000] ""GET /static/logo.png HTTP/1.1"" 200 7696 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.36 - - [30/Oct/2026:16:57:50 +0000] ""GET /checkout HTTP/1.1"" 200 5314 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.13 - - [30/Oct/2026:11:40:26 +0000] ""GET /about.html HTTP/1.1"" 200 8143 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.58 - - [30/Oct/2026:09:22:52 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 6890 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.51 - - [30/Oct/2026:09:40:11 +0000] ""GET /index.html HTTP/1.1"" 200 5099 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.24 - - [30/Oct/2026:17:46:16 +0000] ""GET /about.html HTTP/1.1"" 200 1850 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.58 - - [30/Oct/2026:09:34:13 +0000] ""GET /blog/how-to-choose HTTP/1.1"" 200 5225 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.37 - - [30/Oct/2026:09:25:24 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 8663 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.52 - - [30/Oct/2026:11:32:06 +0000] ""GET /index.html HTTP/1.1"" 200 2524 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.47 - - [30/Oct/2026:15:21:35 +0000] ""GET /products?id=12 HTTP/1.1"" 200 5285 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.3 - - [30/Oct/2026:12:10:57 +0000] ""GET /products?id=12 HTTP/1.1"" 200 5038 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.35 - - [30/Oct/2026:13:22:08 +0000] ""GET /static/app.css HTTP/1.1"" 200 3291 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.48 - - [30/Oct/2026:09:54:38 +0000] ""GET /checkout HTTP/1.1"" 200 8064 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.28 - - [30/Oct/2026:14:51:49 +0000] ""GET /search?q=red+shoes HTTP/1.1"" 200 2999 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.47 - - [30/Oct/2026:17:01:11 +0000] ""GET /contact HTTP/1.1"" 200 2571 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.90 - - [30/Oct/2026:10:00:01 +0000] ""GET /favicon.ico HTTP/1.1"" 404 2885 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.90 - - [30/Oct/2026:10:00:02 +0000] ""GET /apple-touch-icon.png HTTP/1.1"" 404 665 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.91 - - [30/Oct/2026:10:05:00 +0000] ""GET /blog/2026--year-in-review HTTP/1.1"" 200 2111 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.92 - - [30/Oct/2026:10:06:00 +0000] ""GET /search?q=rock+%27n%27+or+%27roll%27 HTTP/1.1"" 200 8637 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.93 - - [30/Oct/2026:10:07:00 +0000] ""GET /search?q=select+a+gift HTTP/1.1"" 200 232 ""-"" ""Mozilla/5.0 (Windows NT 10.0; Win64; x64)""",benign,
+web,"198.51.100.94 - - [30/Oct/2026:10:08:00 +0000] ""POST /login HTTP/1.1"" 200 6336 ""-"" ""curl/8.5.0""",benign,

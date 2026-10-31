@@ -1,0 +1,15 @@
+target/
+*.db
+.idea/
+*.iml
+.vscode/
+sample-data/benign/
+.env
+*.jar
+
+# Private notes and assistant settings (kept locally, not published)
+CLAUDE.md
+**/CLAUDE.md
+.claude/
+docs/private/
+brag-output*/

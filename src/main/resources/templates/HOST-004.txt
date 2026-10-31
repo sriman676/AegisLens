@@ -1,0 +1,3 @@
+What happened: An Office document, PDF reader or browser started a command shell or script host. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Documents and web pages should not start shells; this is the classic first step of a malicious document (macro) or a drive-by download.
+How to fix it: Find the document or page that was open ({evidence}), do not open it again, scan the computer and reset passwords typed on it.

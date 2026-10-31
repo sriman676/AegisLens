@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, URL {target}).
+Why it matters: SQL fragments in a URL are used to trick a site into running database commands and leaking data.
+How to fix it: Use parameterised queries (PreparedStatement), validate input, and add a web application firewall. Evidence: {evidence}.

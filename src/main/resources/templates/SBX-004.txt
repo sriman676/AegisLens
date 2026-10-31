@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, program {target}).
+Why it matters: A crash can mean a damaged file, a missing dependency, or a program that detected the sandbox and quit. By itself it is a weak signal.
+How to fix it: Read the captured error output and try again with a different environment before drawing conclusions. Evidence: {evidence}.

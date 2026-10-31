@@ -1,0 +1,61 @@
+name: CI
+
+# Builds and tests on Windows, Linux and macOS. This is the evidence for "platform independent":
+# the same source compiles, passes the same tests, and produces a runnable JAR on all three.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '26'
+          cache: maven
+
+      - name: Safety check (only the sandbox package may start processes)
+        if: runner.os != 'Windows'
+        run: |
+          if grep -rnE "Runtime\.getRuntime\(\)\.exec|ProcessBuilder|System\.load" src/main --exclude-dir=sandbox; then
+            echo "Forbidden process/native call found"; exit 1
+          fi
+
+      - name: Safety check (no SQL built by string concatenation)
+        if: runner.os != 'Windows'
+        run: |
+          # Database.java is exempt: it sets PRAGMA user_version from a compile-time constant.
+          if grep -rnE '(execute|executeQuery|executeUpdate|prepareStatement|addBatch)\([^;]*"\s*\+' src/main --include=*.java | grep -v 'db/Database.java'; then
+            echo "SQL built with + found: use PreparedStatement placeholders"; exit 1
+          fi
+
+      - name: Build and test
+        run: mvn -B -ntp verify
+
+      - name: Headless smoke test (no display needed, R12/R13)
+        shell: bash
+        run: |
+          java -jar target/aegislens-1.0.0.jar --version
+          java -jar target/aegislens-1.0.0.jar --check-config "--data.dir=$RUNNER_TEMP/aegislens-smoke"
+
+      - name: Upload coverage report
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage
+          path: target/site/jacoco
+
+      - name: Upload runnable JAR for this OS
+        uses: actions/upload-artifact@v7
+        with:
+          name: aegislens-${{ runner.os }}
+          path: target/aegislens-1.0.0.jar

@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, source {target}).
+Why it matters: Trying one or two common passwords against many different accounts is password spraying. It avoids per-account lockouts, so it can slip past simple brute-force limits.
+How to fix it: Block the address, force strong passwords or SSH keys, enable multi-factor authentication, and check whether any of the tried accounts logged in. Evidence: {evidence}.

@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, file {target}).
+Why it matters: The file's fingerprint (SHA-256) matches a known malicious file in the indicator list, so this is not a guess: it is a known threat (EICAR is the harmless antivirus test file).
+How to fix it: Do not run it. Move it to quarantine, delete it, and find out how it arrived. Evidence: {evidence}.

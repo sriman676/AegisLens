@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, file {target}).
+Why it matters: The file refers to operating-system functions that programs use to inject code into other processes, which is common in malware but also in some legitimate tools.
+How to fix it: Do not run the file. Check where it came from and verify it with an antivirus scan. Evidence: {evidence}.

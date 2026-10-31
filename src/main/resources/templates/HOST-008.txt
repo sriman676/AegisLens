@@ -1,0 +1,3 @@
+What happened: A program added itself (or another program) to a Run registry key, so it starts at every logon. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Run and RunOnce keys are a favourite place for malware to make sure it keeps running after a restart.
+How to fix it: Check the program the key starts ({evidence}); if you do not recognise it, delete the registry value and scan that program.

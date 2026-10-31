@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, program {target}).
+Why it matters: Programs that drop files while running are often installing payloads, configuration or persistence. Normal programs also write files, so the names and locations matter.
+How to fix it: Review the created files listed in the evidence ({evidence}), check them against known-bad hashes, and do not run the program outside a sandbox.

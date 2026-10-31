@@ -1,0 +1,37 @@
+# AegisLens headless monitor as a systemd service (Linux). Install steps: README.md, "Running as a service".
+# The service runs as its own unprivileged user, may READ logs through the "adm" group, and may WRITE only its data folder.
+[Unit]
+Description=AegisLens headless security monitor (defensive, read-only log analysis)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=aegislens
+Group=aegislens
+# auth.log and the web server logs are readable by the adm group on Debian/Ubuntu (use "wheel"/ACLs elsewhere)
+SupplementaryGroups=adm
+# Keys (optional): CLAUDE_API_KEY=..., VT_API_KEY=... one per line, file mode 600, owned by root
+EnvironmentFile=-/etc/aegislens/aegislens.env
+ExecStart=/usr/bin/java -jar /opt/aegislens/aegislens.jar --headless --config /etc/aegislens/aegislens.properties --data.dir=/var/lib/aegislens
+# Java exits with 143 after SIGTERM once the shutdown hook has stopped everything cleanly
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=10
+
+# Hardening: no new privileges, read-only system, private /tmp, only the data folder is writable
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/aegislens
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictNamespaces=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+What happened: The page contains tricks often used by phishing or malicious sites. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Forms that send passwords to another site, hidden frames and obfuscated scripts are rare on honest pages.
+How to fix it: Do not enter anything on the page; report it, and check the indicators in the evidence ({evidence}).

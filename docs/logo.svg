@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="256" height="256">
+  <title>AegisLens</title>
+  <defs>
+    <linearGradient id="navy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#312E81"/><stop offset="1" stop-color="#1E1B4B"/></linearGradient>
+  </defs>
+  <path d="M50,4 C62,10 75,13 88,13 L88,45 C88,70 71,86 50,96 C29,86 12,70 12,45 L12,13 C25,13 38,10 50,4 Z" fill="url(#navy)" stroke="#8B5CF6" stroke-width="4" stroke-linejoin="round"/>
+  <circle cx="50.0" cy="47.0" r="23.0" fill="#0B0A1F"/>
+  <polygon points="50.00,38.50 57.36,42.75 72.55,51.52 72.86,49.54 72.99,47.54 72.95,45.53 72.74,43.53 72.35,41.57 71.79,39.64 71.07,37.77 70.18,35.97 69.14,34.25 67.96,32.63 66.64,31.12 65.19,29.73" fill="#67E8F9" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="57.36,42.75 57.36,51.25 57.36,68.79 59.23,68.07 61.03,67.18 62.75,66.14 64.37,64.96 65.88,63.64 67.27,62.19 68.53,60.63 69.65,58.96 70.61,57.20 71.42,55.37 72.07,53.47 72.55,51.52" fill="#22D3EE" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="57.36,51.25 50.00,55.50 34.81,64.27 36.37,65.53 38.04,66.65 39.80,67.61 41.63,68.42 43.53,69.07 45.48,69.55 47.46,69.86 49.46,69.99 51.47,69.95 53.47,69.74 55.43,69.35 57.36,68.79" fill="#67E8F9" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="50.00,55.50 42.64,51.25 27.45,42.48 27.14,44.46 27.01,46.46 27.05,48.47 27.26,50.47 27.65,52.43 28.21,54.36 28.93,56.23 29.82,58.03 30.86,59.75 32.04,61.37 33.36,62.88 34.81,64.27" fill="#22D3EE" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="42.64,51.25 42.64,42.75 42.64,25.21 40.77,25.93 38.97,26.82 37.25,27.86 35.63,29.04 34.12,30.36 32.73,31.81 31.47,33.37 30.35,35.04 29.39,36.80 28.58,38.63 27.93,40.53 27.45,42.48" fill="#67E8F9" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <polygon points="42.64,42.75 50.00,38.50 65.19,29.73 63.63,28.47 61.96,27.35 60.20,26.39 58.37,25.58 56.47,24.93 54.52,24.45 52.54,24.14 50.54,24.01 48.53,24.05 46.53,24.26 44.57,24.65 42.64,25.21" fill="#22D3EE" stroke="#0B0A1F" stroke-width="0.9" stroke-linejoin="round"/>
+  <circle cx="50.0" cy="47.0" r="24.5" fill="none" stroke="#C4B5FD" stroke-width="2"/>
+  <circle cx="50.0" cy="47.0" r="4.2" fill="#F472B6"/>
+  <circle cx="48.5" cy="45.3" r="0.9" fill="#FFFFFF" fill-opacity="0.8"/>
+</svg>

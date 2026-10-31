@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, file {target}).
+Why it matters: Very high entropy means the bytes look random, which is typical of packed, compressed or encrypted content. Malware often packs itself to hide, but installers and archives do too.
+How to fix it: Do not run the file. Compare its hash with a trusted source, scan it with an antivirus, and treat it as suspicious until verified. Evidence: {evidence}.

@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, file {target}).
+Why it matters: The program's internal layout is unusual (for example memory that is both writable and executable, or an entry point outside the code). Malware and packers often look like this, but some legitimate software does too.
+How to fix it: Treat it as suspicious, scan it with other tools, and only run it inside a disposable sandbox. Evidence: {evidence}.

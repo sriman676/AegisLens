@@ -1,0 +1,9 @@
+https://www.google.com/
+https://github.com/login
+https://en.wikipedia.org/wiki/Phishing
+https://paypa1-secure-login.example.test/verify
+https://g00gle-account-check.example.test/signin
+http://192.0.2.15/bank/login.html
+https://shop.example.test/item?id=5%20OR%201=1--
+https://shop.example.test/item?id=1%20UNION%20SELECT%20password%20FROM%20users
+http://free-gift-card.example.test/claim?user=abc@xn--pple-43d.test

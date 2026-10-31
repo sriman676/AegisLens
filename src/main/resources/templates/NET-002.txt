@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, source {target}).
+Why it matters: Requesting many different paths that mostly fail is how attackers map a server and look for hidden admin pages or exposed files.
+How to fix it: Block or rate-limit the address, remove files that should not be public, and put admin pages behind authentication. Evidence: {evidence}.

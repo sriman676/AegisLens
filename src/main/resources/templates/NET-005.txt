@@ -1,0 +1,3 @@
+What happened: {description} (severity {severity}, score {score}/100, address {target}).
+Why it matters: This address is on a public threat-intelligence list of known attack or botnet infrastructure, so contact from it is more likely hostile than random noise.
+How to fix it: Check what the address did (see evidence: {evidence}), block it at your firewall (AegisLens exports a blocklist but never changes your firewall), and review any accounts it touched.

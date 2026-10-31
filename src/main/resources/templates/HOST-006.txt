@@ -1,0 +1,3 @@
+What happened: A program looked up a domain that is on a threat list or imitates a well-known brand. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Look-alike domains are used for phishing and for malware servers that hide behind names users trust.
+How to fix it: Check which program made the lookup ({evidence}); if it was a browser, warn the user about the site; if it was another program, scan it.

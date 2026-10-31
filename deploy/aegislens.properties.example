@@ -1,0 +1,40 @@
+# AegisLens start-up options (copy to <data folder>/aegislens.properties, or /etc/aegislens/aegislens.properties
+# for the systemd service). Command-line --key=value and AEGISLENS_* environment variables win over this file.
+# NEVER put API keys here: keys come only from environment variables (CLAUDE_API_KEY, GEMINI_API_KEY, VT_API_KEY, ...).
+# Windows paths: write C:/logs/auth.log or C:\\logs\\auth.log (a single backslash is an escape in this format).
+# Easiest: edit these in AegisLens under Settings > Start-up options, which writes this file correctly.
+
+# --- live log monitoring (comma-separated paths; the service user must be able to read them)
+monitor.ssh.files=/var/log/auth.log
+monitor.web.files=/var/log/nginx/access.log
+# read existing lines on the very first start (false = only new lines)
+monitor.start.at.beginning=false
+# alert MON-001 when a source is silent this long (0 = off)
+monitor.silence.minutes=60
+
+# --- syslog listener (-1 = off). Ports below 1024 need root, so use 5514 and point rsyslog at it.
+syslog.bind=127.0.0.1
+syslog.udp.port=-1
+syslog.tcp.port=-1
+# who may send (comma-separated IPs/CIDRs)
+syslog.allow=127.0.0.1/32
+
+# --- odd-hour logins (NET-003): local working hours and time zone
+oddhour.start=22:00
+oddhour.end=06:00
+oddhour.zone=Asia/Kolkata
+
+# --- alerting and threads
+dedupe.cooldown.minutes=10
+scan.threads=2
+webhook.min.severity=HIGH
+
+# --- threat feeds (Spamhaus DROP, abuse.ch Feodo); false = never download
+feeds.enabled=true
+
+# --- AI explanations (works offline without any of these)
+# local.llm.url=http://localhost:11434/v1
+# local.llm.model=llama3.2:3b
+ai.redact.cloud=true
+ai.budget.hour=30
+ai.budget.day=200

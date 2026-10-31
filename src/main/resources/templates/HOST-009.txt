@@ -1,0 +1,3 @@
+What happened: The program behind a Windows service was set or changed. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Services run with high rights and start automatically, so a new or changed service pointing into a user folder is a strong sign of persistence.
+How to fix it: Check the service program in the evidence ({evidence}); if it is not part of software you installed, stop and disable the service and scan the file.

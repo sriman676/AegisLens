@@ -1,0 +1,3 @@
+What happened: PowerShell was started in a way attackers use to hide what it runs. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Encoded commands, hidden windows and download-and-run one-liners are typical of malware droppers and hands-on-keyboard attackers; normal admin scripts rarely need them.
+How to fix it: Decode the command in the evidence ({evidence}) to see what it ran, find the parent program that started it, and isolate the computer if you did not start it yourself.

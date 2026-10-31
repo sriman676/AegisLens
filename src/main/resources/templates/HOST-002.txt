@@ -1,0 +1,3 @@
+What happened: A built-in Windows tool was used to download or run code. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Tools such as certutil, mshta, rundll32 and regsvr32 are trusted by Windows, so attackers misuse them to fetch and start malware without bringing their own programs.
+How to fix it: Check the command line and the address it contacted ({evidence}), delete anything it downloaded, and block that address if it is not yours.

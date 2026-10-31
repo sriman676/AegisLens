@@ -1,0 +1,3 @@
+What happened: A program on this computer talked to an address that is on a threat-intelligence list. {description} (severity {severity}, score {score}/100, target {target}).
+Why it matters: Listed addresses belong to known attack or botnet infrastructure, so a connection from inside often means malware is calling home.
+How to fix it: Find the program in the evidence ({evidence}), stop and scan it, and block the address at your firewall (AegisLens exports a blocklist but never changes your firewall).
