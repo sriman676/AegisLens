@@ -96,10 +96,16 @@ class EvaluationTest {
         return b == 0 ? "-" : String.format("%.2f", (double) a / b);
     }
 
-    /** A small RFC 4180 reader (quoted cells with "" for a quote); enough for this file. */
+    @Test
+    void csvReaderAcceptsWindowsLineEndings() {
+        assertArrayEquals(new String[] {"ssh", "x", "attack", "NET-001"}, csv("source,line,label,expected_rule\r\nssh,x,attack,NET-001\r\n").get(1),
+                "Git on Windows checks the CSV out with CRLF; no cell may keep a stray \\r");
+    }
+
+    /** A small RFC 4180 reader (quoted cells with "" for a quote); enough for this file. LF or CRLF line endings. */
     static List<String[]> csv(String text) {
         List<String[]> rows = new ArrayList<>();
-        for (String line : text.split("\n")) {
+        for (String line : text.split("\r?\n")) {
             if (line.isBlank()) {
                 continue;
             }
