@@ -1,11 +1,13 @@
-<p align="center"><img src="docs/logo.svg" alt="AegisLens logo" width="130"></p>
+# AegisLens 🛡️
 
-<h1 align="center">AegisLens 🛡️</h1>
+**A defensive security workbench that watches your logs, Windows hosts, files and links, and explains every finding. Fully offline.**
 
 <p align="center">
-  <b>A defensive security workbench for log monitoring, Windows host detection, static file analysis and link
-  checking, built with Java 26 and JavaFX 26. Works fully offline.</b>
+  <a href="docs/media/aegislens-launch.mp4" title="Click to play the full video">
+    <img src="docs/media/aegislens-launch.gif" alt="AegisLens — 22-second launch video" width="760">
+  </a>
 </p>
+<p align="center"><sub>▶ The preview loops on its own; <a href="docs/media/aegislens-launch.mp4">click it to play the full video</a>.</sub></p>
 
 <p align="center">
   <a href="https://github.com/sriman676/AegisLens/actions/workflows/ci.yml"><img src="https://github.com/sriman676/AegisLens/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
@@ -13,7 +15,7 @@
   <img src="https://img.shields.io/badge/JavaFX-26-1F6FEB" alt="JavaFX 26">
   <img src="https://img.shields.io/badge/SQLite-JDBC-003B57?logo=sqlite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white" alt="Maven">
-  <img src="https://img.shields.io/badge/tests-330%20passing-2EA043" alt="330 tests passing">
+  <img src="https://img.shields.io/badge/tests-331%20passing-2EA043" alt="331 tests passing">
   <img src="https://img.shields.io/badge/coverage-87--95%25-2EA043" alt="Coverage 87-95%">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-6E7781" alt="Platforms">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT licence">
@@ -29,8 +31,6 @@
   <a href="#-faq-and-troubleshooting">FAQ</a>
 </p>
 
----
-
 AegisLens is one desktop program (plus an optional headless service) that turns raw security data into **scored,
 explained findings**. It watches SSH and web-server logs live, reads Windows Security and **Sysmon** event exports,
 analyses files without ever running them, checks links for phishing tricks, runs harmless demo programs in a sandbox,
@@ -39,12 +39,6 @@ and stores everything in SQLite with reports, full-text search and exports.
 > [!IMPORTANT]
 > **Defensive only.** AegisLens detects and reports. It never exploits, never executes the files it analyses, and never
 > changes a firewall: it writes firewall commands for you to review.
-
-<p align="center">
-  <a href="docs/media/aegislens-launch.mp4"><img src="docs/media/aegislens-launch.gif" alt="AegisLens in 22 seconds: a brute-force attack caught live, Sysmon detections and static file analysis" width="100%"></a>
-  <br>
-  <sub>🎬 <a href="docs/media/aegislens-launch.mp4"><b>Watch the full video with sound</b></a> (MP4, 1080p, 22 s)</sub>
-</p>
 
 ## ✨ Highlights
 
@@ -137,7 +131,7 @@ programs.
 
 ```bash
 git clone https://github.com/sriman676/AegisLens.git && cd AegisLens
-mvn clean verify                         # build, 330 tests, coverage check
+mvn clean verify                         # build, 331 tests, coverage check
 mvn javafx:run                           # start the desktop app during development
 mvn package                              # builds target/aegislens-1.0.0.jar for this operating system
 java -jar target/aegislens-1.0.0.jar     # desktop app
@@ -313,7 +307,7 @@ Found a vulnerability? Please report it privately as described in [SECURITY.md](
 
 | Check | Result |
 |---|---|
-| ✅ Automated tests | 330 JUnit tests, green on Windows 11 and Ubuntu |
+| ✅ Automated tests | 331 JUnit tests, green on Windows 11 and Ubuntu |
 | 📈 Coverage (JaCoCo, build fails below 70 %) | core 95 %, db 94 %, malware 94 %, web 90 %, intrusion 88 %, ai 87 % |
 | 🎲 Fuzzing | 21 parsers and detectors fed random input, no crash (`mvn test -Dtest=FuzzTest -Dfuzz.seconds=60`) |
 | 🎯 Labelled evaluation | 152 events: recall 1.00, precision 0.91 |
