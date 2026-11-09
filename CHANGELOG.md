@@ -3,6 +3,19 @@
 All notable changes to AegisLens are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **SIEM forwarding**: every saved finding as RFC 5424 syslog with a CEF or JSON (Elastic Common Schema) payload over
+  UDP, TCP or TLS (trust store with host-name check, or one pinned certificate), and/or JSON lines in a file for SIEM
+  agents. Bounded queue (never blocks detection), retries, a Settings panel with counters and a test event, and
+  `--siem-test` on the command line.
+- **Near-live Sysmon**: `deploy/windows/install-sysmon-export.cmd` creates a Task Scheduler job that exports new Sysmon
+  events every minute into an admin-protected folder that AegisLens watches.
+
+### Fixed
+- The folder watcher no longer hands the same unchanged file on twice when Windows sends a late change event.
+
 ## [1.0.0] - 2026-11-09
 
 First public release.
@@ -34,4 +47,5 @@ First public release.
 ### Dependencies
 - sqlite-jdbc 3.54.1.0 and jackson-databind 2.23.0.
 
+[Unreleased]: https://github.com/sriman676/AegisLens/compare/449be9f...main
 [1.0.0]: https://github.com/sriman676/AegisLens

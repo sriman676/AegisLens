@@ -97,7 +97,8 @@ public final class FakeServer implements AutoCloseable {
         return ks;
     }
 
-    private static SSLContext serverTls() throws Exception {
+    /** The server side of the test certificate (also used by TLS socket tests). */
+    public static SSLContext serverTls() throws Exception {
         KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
         kmf.init(keyStore(), "changeit".toCharArray());
         SSLContext ctx = SSLContext.getInstance("TLS");

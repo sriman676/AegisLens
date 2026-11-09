@@ -15,7 +15,7 @@
   <img src="https://img.shields.io/badge/JavaFX-26-1F6FEB" alt="JavaFX 26">
   <img src="https://img.shields.io/badge/SQLite-JDBC-003B57?logo=sqlite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/build-Maven-C71A36?logo=apachemaven&logoColor=white" alt="Maven">
-  <img src="https://img.shields.io/badge/tests-331%20passing-2EA043" alt="331 tests passing">
+  <img src="https://img.shields.io/badge/tests-346%20passing-2EA043" alt="346 tests passing">
   <img src="https://img.shields.io/badge/coverage-87--95%25-2EA043" alt="Coverage 87-95%">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-6E7781" alt="Platforms">
   <img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT licence">
@@ -26,6 +26,7 @@
   <a href="#-quick-start">Quick start</a> •
   <a href="#-see-it-work-in-2-minutes">Demo</a> •
   <a href="#-reading-windows-sysmon-logs">Sysmon</a> •
+  <a href="#-sending-findings-to-a-siem">SIEM</a> •
   <a href="#-detection-rules">Rules</a> •
   <a href="#-security-and-safety">Security</a> •
   <a href="#-faq-and-troubleshooting">FAQ</a>
@@ -47,6 +48,7 @@ and stores everything in SQLite with reports, full-text search and exports.
 - 🧬 **Safe file analysis**: PE/ELF parsing, entropy and risky imports, all without executing a single byte.
 - 🤖 **Explained findings**: plain-language explanations from Claude, Gemini, a local model, or built-in offline text.
 - 🗄️ **Real database work**: views, triggers, FTS5 search, GROUP BY/HAVING reports with query plans, and a read-only SQL console.
+- 🔗 **SIEM ready**: every finding can be forwarded as syslog (CEF or JSON, over UDP, TCP or TLS) or as a JSON-lines file to Splunk, Elastic, Microsoft Sentinel, QRadar, Wazuh or Graylog.
 - 📴 **Offline first**: everything works without a network; threat feeds are cached and refreshed daily.
 
 ## 🧭 How it works
@@ -80,6 +82,7 @@ flowchart LR
     DB --> UI["Desktop app<br/>live screens and notices"]
     DB --> AI["AI explanations<br/>cloud, local or offline"]
     DB --> OUT["Reports, CSV / JSON / HTML,<br/>block-list files"]
+    P --> SIEM["SIEM<br/>syslog CEF / JSON, JSON lines"]
 ```
 
 Every input is parsed as untrusted data and turned into **findings**: a rule, a target, a score from 0 to 100 and the
@@ -101,6 +104,7 @@ programs.
 | 🗄️ | **Database and reports** | SQLite through JDBC: views, triggers, full-text search (FTS5), GROUP BY/HAVING and subquery reports with their query plans, a read-only SQL console, CSV/JSON export and import, an HTML report, block-list and firewall command files, backups and retention. |
 | 🛰️ | **Threat intelligence** | Spamhaus DROP and abuse.ch Feodo feeds (daily, conditional GET, offline afterwards), plus your own IPs, ranges, hashes, domains and feeds. |
 | 🖥️ | **Desktop app** | Dashboard with live cards and charts, screens that update by themselves, a corner notice for new CRITICAL findings, dark/light/high-contrast designs, custom accent colour, text size and branding, an AWT analyst console and keyboard shortcuts. |
+| 🔗 | **SIEM forwarding** | Every saved finding as RFC 5424 syslog with a CEF or JSON (Elastic Common Schema) payload over UDP, TCP or TLS (certificate checked or pinned), and/or as JSON lines for a SIEM agent. Never blocks detection; a test event checks the connection. |
 | ⚙️ | **Headless service** | `--headless` for servers: systemd unit, Windows logon task, configuration check and exit codes. |
 
 ### 🖼️ Screenshots
@@ -131,7 +135,7 @@ programs.
 
 ```bash
 git clone https://github.com/sriman676/AegisLens.git && cd AegisLens
-mvn clean verify                         # build, 331 tests, coverage check
+mvn clean verify                         # build, 346 tests, coverage check
 mvn javafx:run                           # start the desktop app during development
 mvn package                              # builds target/aegislens-1.0.0.jar for this operating system
 java -jar target/aegislens-1.0.0.jar     # desktop app
@@ -173,13 +177,82 @@ wevtutil qe Microsoft-Windows-Sysmon/Operational /c:5000 /rd:true /f:xml > C:\Us
 
 Then use **Replay log** (a file name containing "sysmon" is recognised automatically).
 
-- 🔁 **Regular checks:** set `monitor.sysmon.folder` and let Task Scheduler drop new exports there. Each new file is read
-  once, and events already read from an earlier export of the same computer are skipped.
+- ⏱️ **Near-live (about a minute behind):** run this once in an **administrator** terminal:
+
+  ```bat
+  deploy\windows\install-sysmon-export.cmd
+  ```
+
+  A Task Scheduler job (as SYSTEM) then exports the last 3 minutes of Sysmon events every minute into
+  `C:\ProgramData\AegisLens\sysmon`, which only administrators can change and only you can read. Set
+  `monitor.sysmon.folder=C:\ProgramData\AegisLens\sysmon` (Settings > Start-up options, then Restart now). Each new
+  export is read once, events already read are skipped, and exports older than a day are deleted. The last run's result
+  is in `C:\ProgramData\AegisLens\last-export.txt`; `uninstall-sysmon-export.cmd` removes it all again.
 - 🔑 **Windows Security events** (4624, 4625, 4740) work the same way:
   `wevtutil qe Security "/q:*[System[(EventID=4624 or EventID=4625 or EventID=4740)]]" /f:xml > security.xml`
 
 > [!WARNING]
 > Exports contain user names and command lines: keep them private and delete them when you are done.
+
+## 🔗 Sending findings to a SIEM
+
+AegisLens forwards every saved finding (after the allow-list and de-duplication) to your SIEM, so its detections sit
+next to the rest of your security data. Two ways, usable together:
+
+| Way | Options | Best for |
+|---|---|---|
+| 📡 **Syslog** (RFC 5424) | `siem.host`, `siem.port`, `siem.protocol` = `udp`, `tcp` (default) or `tls`, `siem.format` = `cef` (default) or `json` | Splunk, QRadar, Microsoft Sentinel (CEF via the Azure Monitor Agent), ArcSight, Wazuh, Graylog, Elastic, rsyslog/syslog-ng |
+| 📄 **JSON-lines file** | `siem.file` = a path; one JSON object per line (Elastic Common Schema names), rotated at 10 MB | Filebeat / Elastic Agent, Splunk Universal Forwarder, Wazuh agent, Graylog Sidecar |
+
+Also: `siem.min.severity` (default `LOW`, so everything) and `siem.tls.cert.sha256` to trust exactly one self-signed
+SIEM certificate (without it, TLS uses the Java trust store and checks the host name). Set them in **Settings >
+Start-up options** and press **Restart now**; the **SIEM forwarding** panel shows what was sent and has a **Send test
+event** button. From a terminal:
+
+```bash
+java -jar target/aegislens-1.0.0.jar --siem-test --siem.host=siem.example.org --siem.protocol=tls
+```
+
+<details>
+<summary><b>What a finding looks like</b></summary>
+
+CEF (the payload after the syslog header):
+
+```text
+CEF:0|AegisLens|AegisLens|1.0.0|NET-001|5 failed SSH logins from 203.0.113.45 in 60 s|7|rt=1794299400123 src=203.0.113.45 cat=HIGH msg=5 failed SSH logins from 203.0.113.45 in 60 s cn1Label=score cn1=72 cs1Label=module cs1=intrusion cs2Label=target cs2=203.0.113.45 cs3Label=status cs3=OPEN cs4Label=evidence cs4=count: 5 externalId=42
+```
+
+JSON:
+
+```json
+{"@timestamp":"2026-11-10T08:30:00.123Z","message":"5 failed SSH logins from 203.0.113.45 in 60 s",
+ "event":{"kind":"alert","module":"aegislens","dataset":"aegislens.finding","severity":72,"risk_score":72,"id":"42"},
+ "rule":{"id":"NET-001"},"source":{"ip":"203.0.113.45"},
+ "observer":{"vendor":"AegisLens","product":"AegisLens","version":"1.0.0","hostname":"pc-01"},
+ "aegislens":{"severity":"HIGH","score":72,"module":"intrusion","target":"203.0.113.45","status":"OPEN","evidence":{"count":"5"}}}
+```
+
+The syslog severity follows the finding (CRITICAL = crit, HIGH = err, MEDIUM = warning, LOW = notice; facility
+authpriv) and CEF severity is the score divided by 10. Raw log lines are never sent.
+</details>
+
+<details>
+<summary><b>Receiver examples</b></summary>
+
+- **Splunk:** Settings > Data inputs > TCP (or UDP) on the chosen port, source type `cef` or `_json`; or monitor the
+  `siem.file` with a Universal Forwarder.
+- **Elastic:** Filebeat/Elastic Agent with the CEF integration (syslog) or a `filestream` input on `siem.file` with
+  the `ndjson` parser.
+- **Microsoft Sentinel:** the "Common Event Format (CEF) via AMA" connector on a Linux forwarder; point `siem.host`
+  at it (TCP 514).
+- **QRadar:** a log source of type "Universal CEF" with protocol Syslog (TCP or TLS Syslog).
+- **Wazuh:** a `<remote>` block with `<connection>syslog</connection>`, `<protocol>tcp</protocol>` and your address in
+  `<allowed-ips>` in `ossec.conf`, or a `<localfile>` with `<log_format>json</log_format>` on `siem.file`.
+- **rsyslog / Graylog:** a TCP or UDP syslog input; Graylog also has a CEF input.
+</details>
+
+> [!TIP]
+> Use `tls` over anything but a local network: findings name hosts, users and command lines.
 
 ## ⚙️ Configuration
 
@@ -196,6 +269,7 @@ also be changed in the app under **Settings**, where rules are switched on and o
 | `oddhour.start`, `oddhour.end`, `oddhour.zone` | working hours for the odd-hour login rule |
 | `feeds.enabled` | `false` = never download threat feeds |
 | `local.llm.url`, `local.llm.model` | a local AI model for explanations |
+| `siem.host`, `siem.port`, `siem.protocol`, `siem.format`, `siem.file` | forward findings to a SIEM (see above) |
 | `data.dir` | where the database, logs, backups and quarantine live |
 
 🔑 API keys are read **only** from environment variables and are never stored: `CLAUDE_API_KEY`, `GEMINI_API_KEY`,
@@ -227,7 +301,8 @@ the database is closed.
 deploy\windows\install-task.cmd "C:\path\to\aegislens-1.0.0.jar"
 ```
 
-This starts AegisLens at every logon without admin rights; `deploy\windows\uninstall-task.cmd` removes it.
+This starts AegisLens at every logon without admin rights; `deploy\windows\uninstall-task.cmd` removes it. For
+near-live Sysmon, add the export task from [Reading Windows Sysmon logs](#-reading-windows-sysmon-logs).
 </details>
 
 Exit codes in headless mode: `0` stopped normally, `1` unexpected error, `2` configuration problem, `3` already running
@@ -307,7 +382,7 @@ Found a vulnerability? Please report it privately as described in [SECURITY.md](
 
 | Check | Result |
 |---|---|
-| ✅ Automated tests | 331 JUnit tests, green on Windows 11 and Ubuntu |
+| ✅ Automated tests | 346 JUnit tests, green on Windows, Ubuntu and macOS (GitHub Actions) |
 | 📈 Coverage (JaCoCo, build fails below 70 %) | core 95 %, db 94 %, malware 94 %, web 90 %, intrusion 88 %, ai 87 % |
 | 🎲 Fuzzing | 21 parsers and detectors fed random input, no crash (`mvn test -Dtest=FuzzTest -Dfuzz.seconds=60`) |
 | 🎯 Labelled evaluation | 152 events: recall 1.00, precision 0.91 |
@@ -317,8 +392,8 @@ Found a vulnerability? Please report it privately as described in [SECURITY.md](
 | 🗄️ Database | dashboard reload 0.26 s and reports 0.2 s on 1 million findings |
 
 > [!NOTE]
-> Not verified yet: macOS (the CI workflow builds there), a full container-sandbox run, and live cloud AI / VirusTotal
-> calls (tested against local fake servers).
+> Not verified yet: a full container-sandbox run, live cloud AI / VirusTotal calls (tested against local fake
+> servers), and a commercial SIEM (forwarding is tested against local UDP, TCP and TLS receivers).
 
 ## ❓ FAQ and troubleshooting
 
@@ -385,6 +460,7 @@ src/main/java/com/aegislens/
   intel/       threat feeds and VirusTotal
   db/          SQLite database, migrations, repositories, reports, SQL console
   app/         wiring: ScanCoordinator, persister thread, config, headless mode
+  siem/        SIEM forwarding: CEF and JSON over syslog (UDP, TCP, TLS) and JSON-lines files
   response/    block-list and firewall command files, HTML report
   net/         shared HTTP client, retries, size limits, proxy, connectivity
   ui/          JavaFX screens, presenters, AWT analyst console
@@ -392,7 +468,7 @@ src/main/java/com/aegislens/
 src/main/resources/   schema.sql, rules, feeds, icons, stylesheets, explanation templates
 src/test/java/        JUnit tests (fake PE/ELF bytes and fake servers, no real malware)
 sample-data/          synthetic logs, URLs, labelled events and a Sysmon export
-deploy/               systemd unit, Windows logon task, app-image packaging, example settings
+deploy/               systemd unit, Windows logon task, Sysmon export task, app-image packaging, example settings
 ```
 
 ## 🤝 Contributing

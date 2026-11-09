@@ -91,7 +91,7 @@ public final class SettingsView {
         restartBar.setAlignment(Pos.CENTER_LEFT);
         showRestartBar(false);
         VBox content = new VBox(16, header, message, restartBar, appearancePanel(), allowListPanel(), rulesPanel(), retentionPanel(),
-                proxyPanel(), startupPanel());
+                proxyPanel(), siemPanel(), startupPanel());
         content.getStyleClass().add("dashboard");
         root = new ScrollPane(content);
         root.setFitToWidth(true);
@@ -218,6 +218,27 @@ public final class SettingsView {
                 Ui.button("Save", "primary-button", this::saveProxy));
         row.setAlignment(Pos.CENTER_LEFT);
         return Ui.panel(Ui.section("NETWORK PROXY (APPLIED AT THE NEXT START)"), row);
+    }
+
+    /** Where findings are forwarded (siem.* start-up options) with a test event to check the connection. */
+    private VBox siemPanel() {
+        Label status = new Label();
+        status.getStyleClass().add("card-sub");
+        status.setWrapText(true);
+        Runnable show = () -> status.setText(coordinator.siem().map(f -> SystemPresenter.siemText(f.settings().describe(),
+                f.sentCount(), f.failedCount(), f.droppedCount(), f.lastError() == null ? null : SafeText.shorten(f.lastError())))
+                .orElse(SystemPresenter.siemText(null, 0, 0, 0, null)));
+        show.run();
+        HBox row = new HBox(10, Ui.button("Send test event", "primary-button", () -> {
+            if (coordinator.siem().map(f -> f.sendTest(java.time.Clock.systemUTC())).orElse(false)) {
+                message.setText("Test event TEST-000 queued; search your SIEM for it.");
+            }
+            javafx.animation.PauseTransition later = new javafx.animation.PauseTransition(javafx.util.Duration.seconds(3));
+            later.setOnFinished(e -> show.run());
+            later.play();
+        }), Ui.button("Refresh status", "secondary-button", show));
+        row.setAlignment(Pos.CENTER_LEFT);
+        return Ui.panel(Ui.section("SIEM FORWARDING (SYSLOG CEF/JSON OVER UDP, TCP OR TLS; JSON-LINES FILE)"), status, row);
     }
 
     private VBox startupPanel() {

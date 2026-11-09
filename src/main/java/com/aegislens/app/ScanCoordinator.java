@@ -47,6 +47,7 @@ import com.aegislens.intrusion.LogType;
 import com.aegislens.intrusion.MonitorManager;
 import com.aegislens.intrusion.SysmonEvent;
 import com.aegislens.intrusion.SysmonXmlSource;
+import com.aegislens.siem.SiemForwarder;
 import com.aegislens.intrusion.Thresholds;
 import com.aegislens.intrusion.WindowsEventXmlSource;
 import com.aegislens.malware.FileScanner;
@@ -129,6 +130,7 @@ public final class ScanCoordinator implements AutoCloseable {
     private final HttpClientFactory http;
     private final ConnectivityMonitor connectivity;
     private final WebhookNotifier webhook;
+    private final SiemForwarder siem;
     private final FeedUpdater feeds;
     private final ScheduledExecutorService feedScheduler;
     private final VirusTotalClient virusTotal;
@@ -179,6 +181,7 @@ public final class ScanCoordinator implements AutoCloseable {
             explanations.setOnline(() -> connectivity.current().online());
         }
         this.webhook = buildWebhook();
+        this.siem = buildSiem(config);
         this.feeds = new FeedUpdater(loadFeeds(), http.client(), RetryPolicy.standard(), new IocRepository(db),
                 new FeedStateRepository(db), System::getenv, Clock.systemUTC());
         this.feedScheduler = Executors.newSingleThreadScheduledExecutor(named("feeds", Thread.MIN_PRIORITY));
@@ -370,6 +373,55 @@ public final class ScanCoordinator implements AutoCloseable {
         }
     }
 
+    /** The SIEM forwarder (siem.host and/or siem.file), or empty if none is configured. */
+    public Optional<SiemForwarder> siem() {
+        return Optional.ofNullable(siem);
+    }
+
+    /** From siem.* options (none of them secret); null when off or invalid (logged; --check-config reports it). */
+    static SiemForwarder buildSiem(AppConfig config) {
+        try {
+            SiemForwarder.Settings s = siemSettings(config);
+            return s.anyOn() ? new SiemForwarder(s, HeadlessMain.VERSION, SiemForwarder.localHostName(), Clock.systemUTC()) : null;
+        } catch (IllegalArgumentException | java.security.GeneralSecurityException e) {
+            LOG.warning("SIEM forwarding not started: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /** siem.host, siem.port (514, or 6514 for TLS), siem.protocol (tcp), siem.format (cef), siem.min.severity (LOW),
+     *  siem.tls.cert.sha256 and siem.file. Throws IllegalArgumentException with a readable message. */
+    public static SiemForwarder.Settings siemSettings(AppConfig config) {
+        String host = config.get("siem.host", "").strip();
+        SiemForwarder.Protocol protocol = choice(SiemForwarder.Protocol.class, "siem.protocol", config.get("siem.protocol", "tcp"));
+        SiemForwarder.Format format = choice(SiemForwarder.Format.class, "siem.format", config.get("siem.format", "cef"));
+        Severity min = choice(Severity.class, "siem.min.severity", config.get("siem.min.severity", "LOW"));
+        String portText = config.get("siem.port", protocol == SiemForwarder.Protocol.TLS ? "6514" : "514").strip();
+        if (!portText.matches("\\d{1,5}") || Integer.parseInt(portText) < 1 || Integer.parseInt(portText) > 65535) {
+            throw new IllegalArgumentException("siem.port must be 1..65535, not '" + portText + "'");
+        }
+        String pin = config.get("siem.tls.cert.sha256", "").strip();
+        if (!pin.isEmpty()) {
+            try {
+                new com.aegislens.net.PinnedTrustManager(pin);         // validates the fingerprint
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("siem.tls.cert.sha256: " + e.getMessage(), e);
+            }
+        }
+        String file = config.get("siem.file", "").strip();
+        return new SiemForwarder.Settings(host, Integer.parseInt(portText), protocol, format, min, pin.isEmpty() ? null : pin,
+                file.isEmpty() ? null : Path.of(file));
+    }
+
+    private static <E extends Enum<E>> E choice(Class<E> type, String key, String value) {
+        try {
+            return Enum.valueOf(type, value.strip().toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(key + " must be one of " + java.util.Arrays.toString(type.getEnumConstants())
+                    .toLowerCase(Locale.ROOT) + ", not '" + value + "'");
+        }
+    }
+
     private String settingOrNull(String key) {
         try {
             return settings.get(key).orElse(null);
@@ -429,6 +481,9 @@ public final class ScanCoordinator implements AutoCloseable {
         }
         if (webhook != null) {
             persister.addListener(webhook::offer);
+        }
+        if (siem != null) {
+            persister.addListener(siem::offer);
         }
         try {
             monitors.start();
@@ -776,6 +831,9 @@ public final class ScanCoordinator implements AutoCloseable {
         bus.close();
         if (started) {
             persister.join(SHUTDOWN_WAIT.toMillis());
+        }
+        if (siem != null) {
+            siem.close();                                 // after the persister, so its last findings are sent
         }
         http.close();                                     // releases the shared HTTP connections (N19)
         if (app != null) {

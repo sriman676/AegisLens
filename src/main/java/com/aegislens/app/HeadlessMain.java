@@ -1,6 +1,7 @@
 package com.aegislens.app;
 
 import com.aegislens.db.AlreadyRunningException;
+import com.aegislens.siem.SiemForwarder;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -19,7 +20,8 @@ import java.util.concurrent.CountDownLatch;
  * maintenance) and runs until the process is stopped (Ctrl+C, systemd stop, or a Windows task end); a shutdown hook then
  * stops every thread in order and closes the database. This class must never load a JavaFX class.
  * Exit codes: 0 normal, 1 unexpected error, 2 configuration problem, 3 already running on this data folder.
- * Also: {@code --version} prints the version; {@code --check-config} checks the configuration and exits.
+ * Also: {@code --version} prints the version; {@code --check-config} checks the configuration and exits;
+ * {@code --siem-test} sends one test finding to the configured SIEM and exits.
  */
 public final class HeadlessMain {
 
@@ -63,7 +65,33 @@ public final class HeadlessMain {
             problems.forEach(p -> err.println("Configuration error: " + p));
             return BAD_CONFIG;
         }
+        if (flags.contains("--siem-test")) {
+            return siemTest(config, out, err);
+        }
         return serve(config, out, err);
+    }
+
+    /** --siem-test: sends one test finding (TEST-000) to the configured SIEM and reports whether it was delivered. */
+    static int siemTest(AppConfig config, PrintStream out, PrintStream err) {
+        SiemForwarder.Settings settings = ScanCoordinator.siemSettings(config);
+        if (!settings.anyOn()) {
+            err.println("No SIEM configured: set siem.host (and siem.port, siem.protocol) and/or siem.file");
+            return BAD_CONFIG;
+        }
+        try (SiemForwarder siem = new SiemForwarder(settings, VERSION, SiemForwarder.localHostName(), java.time.Clock.systemUTC())) {
+            siem.sendTest(java.time.Clock.systemUTC());
+            siem.drain(java.time.Duration.ofSeconds(30));
+            Thread.sleep(200);
+            if (siem.failedCount() > 0) {
+                err.println("SIEM test failed (" + settings.describe() + "): " + siem.lastError());
+                return FAILED;
+            }
+            out.println("SIEM test event sent to " + settings.describe() + ". Search your SIEM for TEST-000.");
+            return OK;
+        } catch (Exception e) {
+            err.println("SIEM test failed: " + e.getMessage());
+            return FAILED;
+        }
     }
 
     /** --config file wins over the default data folder's aegislens.properties. */
@@ -79,7 +107,7 @@ public final class HeadlessMain {
                 if (!Files.isReadable(file)) {
                     throw new IllegalArgumentException("cannot read " + file);
                 }
-            } else if (!args[i].equals("--headless") && !args[i].equals("--check-config")) {
+            } else if (!args[i].equals("--headless") && !args[i].equals("--check-config") && !args[i].equals("--siem-test")) {
                 rest.add(args[i]);
             }
         }
@@ -122,6 +150,11 @@ public final class HeadlessMain {
                     problems.add(key + ": cannot read " + f.strip() + " (check the path and that this user may read it)");
                 }
             }
+        }
+        try {
+            ScanCoordinator.siemSettings(config);
+        } catch (IllegalArgumentException e) {
+            problems.add(e.getMessage());
         }
         String sysmon = config.get(ScanCoordinator.SYSMON_FOLDER, "").strip();
         if (!sysmon.isEmpty() && !Files.isDirectory(Path.of(sysmon))) {

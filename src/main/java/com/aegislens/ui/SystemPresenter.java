@@ -26,7 +26,8 @@ public final class SystemPresenter {
     public static final List<String> STARTUP_KEYS = List.of("monitor.ssh.files", "monitor.web.files", "monitor.sysmon.folder",
             "monitor.silence.minutes", "syslog.bind", "syslog.udp.port", "syslog.tcp.port", "syslog.allow", "oddhour.start",
             "oddhour.end", "oddhour.zone", "dedupe.cooldown.minutes", "scan.threads", "feeds.enabled", "local.llm.url",
-            "local.llm.model", "splitshield.url", "ai.redact.cloud", "ai.budget.hour", "ai.budget.day", "webhook.min.severity");
+            "local.llm.model", "splitshield.url", "ai.redact.cloud", "ai.budget.hour", "ai.budget.day", "webhook.min.severity",
+            "siem.host", "siem.port", "siem.protocol", "siem.format", "siem.min.severity", "siem.tls.cert.sha256", "siem.file");
 
     /** One start-up option: what aegislens.properties says (editable) and what is in effect now. */
     public record Option(String key, String inFile, String inEffect) {
@@ -54,6 +55,15 @@ public final class SystemPresenter {
     public static String virusTotalText(boolean enabled, int queued) {
         return enabled ? "VirusTotal: on (key from VT_API_KEY, hidden)  ·  " + queued + " lookups waiting"
                 : "VirusTotal: off. Set the environment variable VT_API_KEY and restart to enable hash lookups.";
+    }
+
+    /** The SIEM status line; target is null when forwarding is off. */
+    public static String siemText(String target, long sent, long failed, long dropped, String lastError) {
+        if (target == null) {
+            return "SIEM: off. Set siem.host (syslog, CEF or JSON) and/or siem.file (JSON lines) below, then Restart now.";
+        }
+        String line = "SIEM: " + target + "  ·  " + sent + " sent, " + failed + " failed, " + dropped + " dropped";
+        return lastError == null ? line : line + "  ·  last error: " + lastError;
     }
 
     /** "10.0.0.0/8\n user:backup , 10.0.0.0/8" -> "10.0.0.0/8, user:backup" (commas or new lines, duplicates removed). */

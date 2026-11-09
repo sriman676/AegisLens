@@ -29,6 +29,19 @@ dedupe.cooldown.minutes=10
 scan.threads=2
 webhook.min.severity=HIGH
 
+# --- SIEM forwarding (off unless siem.host or siem.file is set); test with --siem-test
+# siem.host=siem.example.org
+# siem.port=6514
+# udp, tcp or tls (tls recommended off the local network)
+# siem.protocol=tls
+# cef or json
+# siem.format=cef
+# siem.min.severity=LOW
+# trust exactly one self-signed SIEM certificate (SHA-256, 64 hex digits)
+# siem.tls.cert.sha256=
+# JSON lines for Filebeat, Elastic Agent, Splunk Universal Forwarder or the Wazuh agent
+# siem.file=/var/log/aegislens/findings.jsonl
+
 # --- threat feeds (Spamhaus DROP, abuse.ch Feodo); false = never download
 feeds.enabled=true
 

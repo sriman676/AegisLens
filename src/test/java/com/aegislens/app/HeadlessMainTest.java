@@ -86,7 +86,28 @@ class HeadlessMainTest {
     }
 
     @Test
+    void siemOptionsAreCheckedAndSiemTestDeliversToAFile() throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream print = new PrintStream(out, true, StandardCharsets.UTF_8);
+        for (String bad : List.of("--siem.protocol=carrier-pigeon", "--siem.port=70000", "--siem.format=xml",
+                "--siem.tls.cert.sha256=abc", "--siem.min.severity=SOME")) {
+            out.reset();
+            assertEquals(HeadlessMain.BAD_CONFIG, HeadlessMain.run(new String[] {"--check-config", "--data.dir=" + dir.resolve("d"),
+                    "--siem.host=siem.example", bad}, print, print), bad);
+            assertTrue(out.toString(StandardCharsets.UTF_8).contains(bad.substring(2, bad.indexOf('='))), out.toString(StandardCharsets.UTF_8));
+        }
+        assertEquals(HeadlessMain.BAD_CONFIG, HeadlessMain.run(new String[] {"--siem-test", "--data.dir=" + dir.resolve("d")}, print, print),
+                "nothing configured");
+        Path file = dir.resolve("siem.jsonl");
+        out.reset();
+        assertEquals(HeadlessMain.OK, HeadlessMain.run(new String[] {"--siem-test", "--data.dir=" + dir.resolve("d"),
+                "--siem.file=" + file}, print, print), out.toString(StandardCharsets.UTF_8));
+        assertTrue(Files.readString(file).contains("\"TEST-000\""));
+    }
+
+    @Test
     void launcherRecognisesHeadlessFlags() {
+        assertTrue(Launcher.wantsHeadless(new String[] {"--siem-test"}));
         assertTrue(Launcher.wantsHeadless(new String[] {"--headless"}));
         assertTrue(Launcher.wantsHeadless(new String[] {"--data.dir=x", "--check-config"}));
         assertFalse(Launcher.wantsHeadless(new String[] {"--data.dir=x"}));

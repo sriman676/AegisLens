@@ -9,7 +9,7 @@ import java.util.Arrays;
 /**
  * Real entry point for the fat JAR. It must NOT extend Application, otherwise
  * "JavaFX runtime components are missing" appears when running with java -jar.
- * With --headless, --version or --check-config, or on a machine without a display (a server), it starts HeadlessMain
+ * With --headless, --version, --check-config or --siem-test, or on a machine without a display (a server), it starts HeadlessMain
  * instead and never touches JavaFX.
  */
 public final class Launcher {
@@ -26,6 +26,7 @@ public final class Launcher {
     }
 
     public static boolean wantsHeadless(String[] args) {
-        return Arrays.stream(args).anyMatch(a -> a.equals("--headless") || a.equals("--version") || a.equals("--check-config"));
+        return Arrays.stream(args).anyMatch(a -> a.equals("--headless") || a.equals("--version") || a.equals("--check-config")
+                || a.equals("--siem-test"));
     }
 }
