@@ -12,6 +12,8 @@ and the project uses [Semantic Versioning](https://semver.org/).
   `--siem-test` on the command line.
 - **Near-live Sysmon**: `deploy/windows/install-sysmon-export.cmd` creates a Task Scheduler job that exports new Sysmon
   events every minute into an admin-protected folder that AegisLens watches.
+- **`START.cmd` and `start.sh`**: check Java 26, build the JAR when it is missing or older than the code, then open the
+  app (arguments are passed on). CI runs both.
 
 ### Fixed
 - The folder watcher no longer hands the same unchanged file on twice when Windows sends a late change event.

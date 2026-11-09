@@ -46,6 +46,17 @@ jobs:
         run: |
           java -jar target/aegislens-1.0.0.jar --version
           java -jar target/aegislens-1.0.0.jar --check-config "--data.dir=$RUNNER_TEMP/aegislens-smoke"
+          java -jar target/aegislens-1.0.0.jar --siem-test "--data.dir=$RUNNER_TEMP/aegislens-smoke" "--siem.file=$RUNNER_TEMP/siem.jsonl"
+          grep -q TEST-000 "$RUNNER_TEMP/siem.jsonl"
+
+      - name: Start script (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: ./start.sh --version
+
+      - name: Start script (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: START.cmd --version
 
       - name: Upload coverage report
         if: runner.os == 'Linux'

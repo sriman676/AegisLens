@@ -133,6 +133,10 @@ programs.
 
 **Requirements:** JDK 26 and Maven 3.9+ on Windows, Linux or macOS.
 
+🖱️ **Easiest:** after cloning, double-click **`START.cmd`** on Windows, or run **`./start.sh`** on Linux and macOS. It
+checks Java, builds the app the first time (and again whenever the code changes), then opens it. Arguments are passed
+on, for example `START.cmd --headless`.
+
 ```bash
 git clone https://github.com/sriman676/AegisLens.git && cd AegisLens
 mvn clean verify                         # build, 346 tests, coverage check
@@ -468,6 +472,7 @@ src/main/java/com/aegislens/
 src/main/resources/   schema.sql, rules, feeds, icons, stylesheets, explanation templates
 src/test/java/        JUnit tests (fake PE/ELF bytes and fake servers, no real malware)
 sample-data/          synthetic logs, URLs, labelled events and a Sysmon export
+START.cmd, start.sh   build if needed, then open the app
 deploy/               systemd unit, Windows logon task, Sysmon export task, app-image packaging, example settings
 ```
 
