@@ -1,13 +1,18 @@
 @echo off
 REM Near-live Sysmon for AegisLens: exports new Sysmon events every minute into C:\ProgramData\AegisLens\sysmon.
-REM Run ONCE in an administrator terminal:  deploy\windows\install-sysmon-export.cmd [windows-user-who-runs-AegisLens]
+REM Run ONCE in an administrator terminal:  deploy\windows\install-sysmon-export.cmd [user-who-runs-AegisLens]
+REM (default: the user signed in at the desktop; a bare name means a local account, COMPUTER\name)
 REM The task runs as SYSTEM, so the script is copied to a folder only administrators can change, and only that user
 REM (plus SYSTEM and administrators) can read the exports. Then set monitor.sysmon.folder=C:\ProgramData\AegisLens\sysmon.
 REM Remove everything again with uninstall-sysmon-export.cmd.
 setlocal
 set "ROOT=%ProgramData%\AegisLens"
 set "READER=%~1"
+REM Default: the user signed in at the desktop (an admin terminal may run as another account, e.g. Admin).
+if "%READER%"=="" for /f "usebackq delims=" %%u in (`powershell -NoProfile -NonInteractive -Command "(Get-CimInstance Win32_ComputerSystem).UserName"`) do set "READER=%%u"
 if "%READER%"=="" set "READER=%USERDOMAIN%\%USERNAME%"
+REM A bare user name means a local account on this computer.
+echo %READER%| findstr /c:"\\" >nul || set "READER=%COMPUTERNAME%\%READER%"
 
 net session >nul 2>nul || (
   echo Please run this in an administrator terminal ^(right-click Terminal, Run as administrator^).
